@@ -16,6 +16,10 @@
     </a>
 {% endif %}
 
+{% if has_notes %}
+    <a class="roulette" href="{{ url_for('random_note') }}">🎲 кинуть рулетку</a>
+{% endif %}
+
 <div class="note-grid">
 
     {% for item in items %}
@@ -54,12 +58,11 @@
 
     {% else %}
 
-        <p class="empty">Пока здесь пусто.</p>
+        <p class="empty">Пока здесь пусто. Даже маскот загрустил.</p>
 
     {% endfor %}
 
 </div>
-```
 
 </main>
 

@@ -1,0 +1,4 @@
+flask>=3.1
+markdown>=3.11
+lzstring>=1.0.4
+excalidraw-render>=0.3.0

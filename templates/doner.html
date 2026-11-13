@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<main class="doner-page">
+
+<h1>Донерка на Серпуховке</h1>
+
+<p class="page-sub">
+    Работаем с 10:00 до последнего голодного. Донер как в шараге, только соус не убежал.
+    Сейчас заказано: <b>{{ total_orders }}</b>.
+</p>
+
+<div class="doner-layout">
+
+    <div class="doner-menu">
+        {% for item in menu %}
+            <div class="doner-card"
+                 data-id="{{ item.id }}"
+                 data-name="{{ item.name }}"
+                 data-price="{{ item.price }}">
+                <div class="doner-emoji">{{ item.emoji }}</div>
+
+                <div class="doner-info">
+                    <div class="doner-name">{{ item.name }}</div>
+                    <div class="doner-desc">{{ item.desc }}</div>
+                </div>
+
+                <div class="doner-bottom">
+                    <span class="doner-price">{{ item.price }} ₽</span>
+
+                    <div class="doner-controls">
+                        <button class="doner-minus" type="button" aria-label="убрать">−</button>
+                        <span class="doner-qty">0</span>
+                        <button class="doner-plus" type="button" aria-label="добавить">+</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <aside class="doner-cart">
+        <h2>Заказ</h2>
+
+        <ul class="cart-list" id="cartList">
+            <li class="empty-cart">Пока пусто. Как в жизни.</li>
+        </ul>
+
+        <div class="cart-total">Итого: <span id="cartTotal">0</span> ₽</div>
+
+        <button class="order-button" id="orderButton" type="button">Заказать</button>
+
+        <p class="order-result" id="orderResult"></p>
+
+        <p class="hint">Оплата наличными, на веру и по доброте.</p>
+    </aside>
+
+</div>
+
+<h2 class="feed-title">Последние заказы</h2>
+
+<ul class="order-feed">
+    {% for order in orders %}
+        <li>
+            <b>#{{ order.number }}</b> — {{ order.summary }} — {{ order.total }} ₽
+            <span class="order-status">{{ order.status }} (~{{ order.wait }} мин)</span>
+        </li>
+    {% else %}
+        <li class="empty">Сегодня ещё никто не ел. Ты будешь первым.</li>
+    {% endfor %}
+</ul>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/doner.js') }}"></script>
+
+{% endblock %}

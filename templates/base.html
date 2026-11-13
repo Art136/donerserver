@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,7 @@
     {% block head %}
     <script>
 window.MathJax = {
-    tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-    },
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
     options: {
         skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
@@ -29,9 +26,11 @@ window.MathJax = {
 
 <div class="topnav">
   <a class="{% if request.path == '/' %}active{% endif %}" href="/">Домой</a>
-  <a class="{% if request.path == '/Browse' %}active{% endif %}" href="/Browse">Файлы</a>
-  <a class="" href="#" onclick="openContact(); return false;">Контакты</a>
+  <a class="{% if request.path.startswith('/Browse') %}active{% endif %}" href="/Browse">Файлы</a>
+  <a class="{% if request.path.startswith('/doner') %}active{% endif %}" href="/doner">Донерка</a>
+  <a class="{% if request.path.startswith('/guestbook') %}active{% endif %}" href="/guestbook">Гостевая</a>
   <a class="{% if request.path == '/about' %}active{% endif %}" href="/about">Полезное</a>
+  <a class="" href="#" onclick="openContact(); return false;">Контакты</a>
 </div>
 
 <div id="contactPopup" class="popup">
@@ -60,6 +59,33 @@ function closeContact() {
 </script>
 
 {% block body %}{% endblock %}
+
+<div id="mascot" class="mascot" title="не кормить">
+    <div class="mascot-bubble" id="mascotBubble">чё, брат?</div>
+
+    <svg class="mascot-svg" viewBox="0 0 100 100" width="86" height="86" aria-hidden="true">
+        <ellipse cx="50" cy="24" rx="35" ry="15" fill="#e9ba6b" stroke="#2f2213" stroke-width="2.5"/>
+        <g fill="#fff8e6" opacity="0.9">
+            <ellipse cx="34" cy="19" rx="2.6" ry="1.6" transform="rotate(-12 34 19)"/>
+            <ellipse cx="48" cy="15" rx="2.6" ry="1.6"/>
+            <ellipse cx="62" cy="18" rx="2.6" ry="1.6" transform="rotate(10 62 18)"/>
+            <ellipse cx="55" cy="26" rx="2.6" ry="1.6" transform="rotate(-6 55 26)"/>
+        </g>
+        <rect x="14" y="37" width="72" height="9" rx="4.5" fill="#7ec850" stroke="#2f2213" stroke-width="2"/>
+        <rect x="15" y="47" width="70" height="13" rx="5" fill="#8a4b2a" stroke="#2f2213" stroke-width="2"/>
+        <g class="mascot-face">
+            <ellipse cx="39" cy="53" rx="7" ry="5.5" fill="#fff"/>
+            <ellipse cx="61" cy="53" rx="7" ry="5.5" fill="#fff"/>
+            <circle class="pupil" cx="39" cy="53" r="2.8" fill="#14100a"/>
+            <circle class="pupil" cx="61" cy="53" r="2.8" fill="#14100a"/>
+        </g>
+        <path d="M16 61 h68 v3 a5 5 0 0 1 -5 5 h-58 a5 5 0 0 1 -5 -5 z"
+              fill="#f4c542" stroke="#2f2213" stroke-width="2"/>
+        <path d="M15 71 q35 22 70 0 z" fill="#e9ba6b" stroke="#2f2213" stroke-width="2.5"/>
+    </svg>
+</div>
+
+<script src="{{ url_for('static', filename='js/fun.js') }}"></script>
 
 </body>
 </html>

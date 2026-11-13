@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<main class="guestbook-page">
+
+<h1>Гостевая</h1>
+
+<p class="page-sub">
+    Оставь шутку, отмазку или рецепт соуса. Всё сохраняется в JSON и переживёт перезапуск.
+</p>
+
+<form class="guest-form" method="post" action="">
+    <div class="form-row">
+        <input type="text" name="name" maxlength="40" placeholder="имя (или «аноним»)">
+        <select name="mood">
+            {% for mood in moods %}
+                <option value="{{ mood }}">{{ mood }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <input type="text" name="text" maxlength="300" placeholder="твоя шутка" required>
+
+    <button type="submit">Оставить запись</button>
+</form>
+
+<div class="sticker-wall">
+    {% for entry in entries %}
+        <div class="sticker"
+             style="--bg: {{ entry.color }}; --tilt: {{ entry.angle }}deg">
+            <div class="sticker-mood">{{ entry.mood }}</div>
+            <div class="sticker-text">{{ entry.text }}</div>
+            <div class="sticker-author">— {{ entry.name }}</div>
+            <div class="sticker-date">{{ entry.ts[:10] }}</div>
+        </div>
+    {% else %}
+        <p class="hint">Пока тихо. Первая запись может быть про то, как ты сюда попал.</p>
+    {% endfor %}
+</div>
+
+</main>
+
+{% endblock %}

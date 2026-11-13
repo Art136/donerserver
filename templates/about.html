@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
-{% block head %}
-<h1>Полезное</h1>
-{% endblock %}
-
 {% block body %}
-<p> Тут есть ссылка на <a href="https://github.com/vintdime/coolserver">репо</a> сервера</p>
-{% endblock %}  
+
+<h1>Полезное</h1>
+
+<p>Тут есть ссылка на <a href="https://github.com/vintdime/coolserver">репо</a> сервера</p>
+
+<p>Ещё можно <a href="{{ url_for('random_note') }}">кинуть рулетку</a>,
+   <a href="{{ url_for('doner') }}">сходить в донерку</a> или
+   <a href="{{ url_for('guestbook') }}">оставить шутку в гостевой</a>.</p>
+
+{% endblock %}

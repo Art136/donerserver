@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<main class="error-page">
+    <h1 class="error-code">404</h1>
+    <p class="error-phrase">{{ phrase }}</p>
+
+    <div class="hero-buttons">
+        <a class="big-button" href="{{ url_for('index') }}">🏠 Домой</a>
+        <a class="big-button" href="{{ url_for('random_note') }}">🎲 Кинуть рулетку</a>
+        <a class="big-button" href="{{ url_for('doner') }}">🥙 За донером</a>
+    </div>
+
+    <p class="hint">
+        Если это не ошибка, а ты просто искал конспект — попробуй папку
+        <a href="{{ url_for('Browse') }}">Файлы</a>.
+    </p>
+</main>
+
+{% endblock %}

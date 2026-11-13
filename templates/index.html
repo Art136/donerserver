@@ -1,16 +1,38 @@
 {% extends 'base.html' %}
 
-{% block head %}
-
-{% endblock %}
-
 {% block body %}
-<p>Это мой первый сайт. Я его написал потому что мне было очень скучно и мне показалось что это будет интересно. Завайбкожено на 80 процентов, но вроде я узнал что-то новое. Задеплоено 9 сентября 
+
+<main class="home">
+
+<h1>burger<span class="blink">_</span>server</h1>
+
+<p>Это мой первый сайт. Я его написал потому что мне было очень скучно и мне показалось что это будет интересно. Завайбкожено на {{ vibe }} процентов, но вроде я узнал что-то новое. Задеплоено 9 сентября
 </p>
 <p>В ближайшее время хочу поделать на этом домене поддомены и придумать чет новое. Пишите мне в тг предложения
 </p>
-<p>  Если кто-то заинтересован, можно попробовать сделать дб с конспектами побольше
+<p>Если кто-то заинтересован, можно попробовать сделать дб с конспектами побольше
 </p>
 <p>Мои конспекты находятся в папке mykpklectures, все остальное не моё</p>
 
-{% endblock %}  
+<div class="hero-buttons">
+    <a class="big-button" href="{{ url_for('random_note') }}">🎲 Мне повезёт</a>
+    <a class="big-button" href="{{ url_for('doner') }}">🥙 Донерка</a>
+    <a class="big-button" href="{{ url_for('panic') }}">😱 Паника</a>
+    <a class="big-button" href="{{ url_for('guestbook') }}">📖 Гостевая</a>
+</div>
+
+<div class="stat-row">
+    <div class="stat"><b>{{ notes_count }}</b><span>конспектов</span></div>
+    <div class="stat"><b>{{ lines }}</b><span>строк кода</span></div>
+    <div class="stat"><b>{{ vibe }}%</b><span>завайбкожено</span></div>
+</div>
+
+<section class="panel">
+    <h2>Отмазка дня</h2>
+    <p class="excuse">«{{ excuse }}»</p>
+    <p class="hint">пригодится, если спросят, почему тебя не было</p>
+</section>
+
+</main>
+
+{% endblock %}

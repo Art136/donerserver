@@ -2,10 +2,41 @@
 
 {% block body %}
 
+{% set parent = filepath.rsplit('/', 1)[0] if '/' in filepath else '' %}
+
 <main class="note-page">
+
+    <a class="back-button"
+       href="{{ url_for('Browse', filepath=parent) if parent else url_for('Browse') }}">
+        ← К файлам
+    </a>
+
     <article class="markdown-body">
         {{ content|safe }}
     </article>
+
+    <section class="sticker-zone">
+        <h2>Стикеры на полях ({{ stickers|length }})</h2>
+
+        <form class="sticker-form" method="post" action="">
+            <input type="text" name="name" maxlength="40" placeholder="кто ты">
+            <input type="text" name="text" maxlength="300" placeholder="прилепи шутку к конспекту" required>
+            <button type="submit">Прилепить</button>
+        </form>
+
+        <div class="sticker-wall">
+            {% for sticker in stickers %}
+                <div class="sticker"
+                     style="--bg: {{ sticker.color }}; --tilt: {{ sticker.angle }}deg">
+                    <div class="sticker-text">{{ sticker.text }}</div>
+                    <div class="sticker-author">— {{ sticker.name }}</div>
+                </div>
+            {% else %}
+                <p class="hint">Стикеров нет. Ты можешь стать первым, кто тут что-то напишет.</p>
+            {% endfor %}
+        </div>
+    </section>
+
 </main>
 
 {% endblock %}

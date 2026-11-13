@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<main class="panic-page">
+
+<h1>Паника</h1>
+
+<p class="page-sub">До сессии осталось:</p>
+
+<div class="countdown" id="countdown">
+    <div class="count-box"><b id="cdDays">--</b><span>дней</span></div>
+    <div class="count-box"><b id="cdHours">--</b><span>часов</span></div>
+    <div class="count-box"><b id="cdMinutes">--</b><span>минут</span></div>
+    <div class="count-box"><b id="cdSeconds">--</b><span>секунд</span></div>
+</div>
+
+<p class="page-sub" id="panicNote"></p>
+
+<div class="panel panic-panel">
+    <p class="excuse" id="panicPhrase">«Нажми на кнопку, станет легче. Наверное.»</p>
+
+    <div class="hero-buttons">
+        <button class="big-button" type="button" id="motivateButton">💪 Дай мотивашку</button>
+        <button class="big-button" type="button" id="giveUpButton">🏳️ Сдаться</button>
+        <a class="big-button" href="{{ url_for('Browse') }}">📚 К конспектам</a>
+    </div>
+</div>
+
+</main>
+
+<script>
+(function () {
+    var target = new Date("{{ session_date }}T09:00:00");
+    var phrases = {{ phrases | tojson }};
+
+    var days = document.getElementById("cdDays");
+    var hours = document.getElementById("cdHours");
+    var minutes = document.getElementById("cdMinutes");
+    var seconds = document.getElementById("cdSeconds");
+    var note = document.getElementById("panicNote");
+
+    function pad(value) {
+        return value < 10 ? "0" + value : String(value);
+    }
+
+    function tick() {
+        var left = target - new Date();
+
+        if (left <= 0) {
+            days.textContent = hours.textContent = minutes.textContent = seconds.textContent = "00";
+            note.textContent = "Сессия уже началась. Паниковать поздно, но можно.";
+            return;
+        }
+
+        var totalSeconds = Math.floor(left / 1000);
+
+        days.textContent = Math.floor(totalSeconds / 86400);
+        hours.textContent = pad(Math.floor(totalSeconds % 86400 / 3600));
+        minutes.textContent = pad(Math.floor(totalSeconds % 3600 / 60));
+        seconds.textContent = pad(totalSeconds % 60);
+
+        setTimeout(tick, 1000);
+    }
+
+    tick();
+
+    document.getElementById("motivateButton").addEventListener("click", function () {
+        document.getElementById("panicPhrase").textContent =
+            "«" + phrases[Math.floor(Math.random() * phrases.length)] + "»";
+    });
+
+    document.getElementById("giveUpButton").addEventListener("click", function () {
+        document.getElementById("panicPhrase").textContent =
+            "«Сдаться нельзя: ты уже купил донер, значит вложение есть.»";
+    });
+}());
+</script>
+
+{% endblock %}
